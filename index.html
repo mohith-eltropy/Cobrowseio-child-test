@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cross document iframe child</title>
+  <script>
+    (function (w, t, c, p, s, e) {
+      p = new Promise(function (r) {
+        w[c] = {
+          client: function () {
+            if (!s) {
+              s = document.createElement(t); s.src = 'https://js.cobrowse.io/CobrowseIO.js'; s.async = 1;
+              e = document.getElementsByTagName(t)[0]; e.parentNode.insertBefore(s, e); s.onload = function () { r(w[c]); };
+            } return p;
+          }
+        };
+      });
+    })(window, 'script', 'CobrowseIO');
+
+    // required trusted origin of the parent iframe
+    CobrowseIO.trustedOrigins = [
+      'https://mohith-eltropy.github.io/Cobrowseio-parent-test/'
+    ];
+
+    // no license key required
+    CobrowseIO.client().then(function(){
+        CobrowseIO.start();
+    });
+  </script>
+</head>
+
+<body>
+  <div style="text-align: center;">
+    <div style="height: 40px;"></div>
+    <div>This is the child iframe page.</div>
+  </div>
+</body>
+
+</html>
